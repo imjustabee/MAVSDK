@@ -49,3 +49,82 @@ Quick Links:
 ## License
 
 This project is licensed under the permissive BSD 3-clause, see [LICENSE.md](LICENSE.md).
+
+
+## Build Instructions
+
+First install XCode Command line tools:
+```
+xcode-select --install
+```
+
+And Homebrew for cmake. Once you have installed brew, you can install cmake using brew in the terminal:
+```
+brew install cmake
+```
+
+Next build the project with the following parameters:
+```
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=ON -DBUILD_MAVSDK_SERVER=ON -Bbuild/default -H.
+```
+
+Then we will install the package system wide, in order to be used by example functions:
+```
+sudo cmake --build build/default --target install
+```
+
+If you have already built before, be sure to remove the build folder before running another one:
+```
+rm -rf build/default
+```
+
+##Install Simulator for local testing
+
+Get the PX4 flight stack source code using git (you may need to install git for your platform):
+```
+git clone https://github.com/PX4/Firmware.git --recursive
+cd Firmware
+```
+
+Then we will install the PX4 environment:
+```
+ulimit -S -n 2048
+
+brew tap PX4/px4
+brew install px4-dev
+
+# install required packages using pip3
+python3 -m pip install --user pyserial empy toml numpy pandas jinja2 pyyaml pyros-genmsg packaging
+# if this fails with a permissions error, your Python install is in a system path - use this command instead:
+sudo -H python3 -m pip install --user pyserial empy toml numpy pandas jinja2 pyyaml pyros-genmsg packaging
+
+# install gazebo simulator
+brew install --cask xquartz
+brew install px4-sim-gazebo
+```
+
+Make sure that you also install the QGroundControl local application from the following location:
+- [QGC Install](https://docs.qgroundcontrol.com/master/en/getting_started/download_and_install.html#macOS)
+
+Then you can run the simulator:
+```
+make px4_sitl gazebo
+```
+
+
+## Running an example script to test against simulator
+Build the radio example:
+```
+cd examples/radio_calibrate/
+mkdir build && cd build
+cmake ..
+make
+```
+
+Then run the example app (from the example/radio_calibrate/build directory) as shown:
+```
+./radio_calibrate udp://:14540
+```
+
+The MAVSDK application should connect to PX4, and you will be able to observe the example running in the SDK terminal, SITL terminal, and/or QGroundControl.
+

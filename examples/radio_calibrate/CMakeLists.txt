@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(calibrate)
+project(radio_calibrate)
 
 find_package(Threads REQUIRED)
 
@@ -15,8 +15,8 @@ endif()
 
 find_package(MAVSDK REQUIRED)
 
-add_executable(calibrate
-    calibrate.cpp
+add_executable(radio_calibrate
+    radio_calibrate.cpp
 )
 
 target_link_libraries(calibrate

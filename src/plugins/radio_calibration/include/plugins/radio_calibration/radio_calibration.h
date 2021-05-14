@@ -151,7 +151,7 @@ public:
      *
      * @return Result of request.
      */
-    Result cancel() const;
+    void cancel() const;
 
 
 

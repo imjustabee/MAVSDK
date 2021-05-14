@@ -1,6 +1,7 @@
 add_library(mavsdk_radio_calibration
     radio_calibration.cpp
     radio_calibration_impl.cpp
+    radio_calibration_statustext_parser.cpp
 )
 
 target_link_libraries(mavsdk_radio_calibration

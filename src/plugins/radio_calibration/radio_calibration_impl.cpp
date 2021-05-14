@@ -43,7 +43,7 @@ void RadioCalibrationImpl::disable() {}
 
 
 
-void RadioCalibrationImpl::calibrate_radio_async(RadioCalibration::CalibrateRadioCallback callback)
+void RadioCalibrationImpl::calibrate_radio_async(const RadioCalibrationCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_calibration_mutex);
 
